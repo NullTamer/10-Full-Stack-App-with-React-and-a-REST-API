@@ -22,10 +22,16 @@ const CourseDetail = ({ context }) => {
     const { emailAddress } = context.authenticatedUser;
     const { password } = context.authenticatedUser;
 
-    context.data.deleteCourse(id, course, emailAddress, password).then(() => {
-      console.log(`${course.title} is successfully deleted!`);
-      history.push("/");
-    });
+    context.data
+      .deleteCourse(id, course, emailAddress, password)
+      .then(() => {
+        console.log(`${course.title} is successfully deleted!`);
+        history.push("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        history.push("/error");
+      });
   });
 
   return (
@@ -75,19 +81,7 @@ const CourseDetail = ({ context }) => {
                 <p>{course.estimatedTime}</p>
 
                 <h3 className="course--detail--title">Materials Needed</h3>
-                {course.materialsNeeded !== null && (
-                  <ul className="course--detail--list">
-                    {course.materialsNeeded.split("*").map((material, i) => {
-                      if (material !== "") {
-                        return (
-                          <li key={i}>
-                            <ReactMarkdown>{material}</ReactMarkdown>
-                          </li>
-                        );
-                      }
-                    })}
-                  </ul>
-                )}
+                <ReactMarkdown>{course.materialsNeeded}</ReactMarkdown>
               </div>
             </div>
           </form>

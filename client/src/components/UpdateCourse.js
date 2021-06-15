@@ -95,16 +95,13 @@ class UpdateCourse extends Component {
   };
 
   submit = () => {
-    //destructure context prop from this.props
     const { context } = this.props;
     const { emailAddress } = context.authenticatedUser;
     const { password } = context.authenticatedUser;
     const id = this.props.match.params.id;
 
-    //unpack properties from the state object (this.state) into distinct variables
     const { title, description, estimatedTime, materialsNeeded } = this.state;
 
-    //new course payload that will be passed to createUser() method
     const course = {
       title,
       description,
@@ -112,7 +109,6 @@ class UpdateCourse extends Component {
       materialsNeeded,
     };
 
-    //creates a new course
     context.data
       .updateCourse(id, course, emailAddress, password)
       .then((errors) => {
@@ -126,7 +122,7 @@ class UpdateCourse extends Component {
   };
 
   cancel = () => {
-    this.props.history.push("/");
+    this.props.history.push("courses/");
   };
 }
 

@@ -66,13 +66,21 @@ class UserSignIn extends Component {
     const { context } = this.props;
     const { emailAddress, password } = this.state;
 
-    context.actions.signIn(emailAddress, password).then((user) => {
-      if (user === null) {
-        this.setState(() => {
-          return { errors: ["Sign-in was unsuccessful"] };
-        });
-      }
-    });
+    context.actions
+      .signIn(emailAddress, password)
+      .then((user) => {
+        if (user === null) {
+          this.setState(() => {
+            return { errors: ["Sign-in was unsuccessful"] };
+          });
+        } else {
+          this.props.history.push("/");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        this.props.history.push("/error");
+      });
   };
 
   cancel = () => {
